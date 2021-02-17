@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Photo Gallery</title>
+
+    <!-- https://google.github.io/material-design-icons/#icon-font-for-the-web -->
+    <!-- Using via Google Web Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <!-- https://tailwindcss.com/docs/installation -->
+    <!-- Using Tailwind via CDN -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+    <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <style>
+        .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <body id="app" class="bg-indigo-lightest font-sans">
+        <div v-show="!bigPhotoDisplay">
+            <div class="flex justify-center mb-2">
+                <h1 class="text-4xl font-bold">Photo Gallery ({{countPics}})</h1>
+                <button v-show="showSearchButton" @click="toggleSerachDisplay" class="material-icons text-4xl pt-1 ml-3">search</button>
+            </div>
+            <div v-show="!showSearchButton" class="flex justify-center mb-2">
+                <input v-model="searchKeywordsRealtime" @keyup.enter="doSearch" placeholder="Enter your keywords" id="serachBox" class="pl-1 text-black shadow-inner border border-gray-300 border-opacity-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent focus:ring-opacity-70">
+                <button @click="toggleSerachDisplay" id="cancelButton" class="ml-3 bg-purple-600 text-white text-base font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200">Cancel</button>
+            </div>
+            <h2 class="text-2xl font-bold ml-3 text-blue-600">Total Like(s): {{totalLikes}}</h2>
+            <div class="grid max-w-4xl mx-auto p-8">
+                <p v-show="showNoResult"></p> <!-- grid1 -->
+                <p v-show="showNoResult" class="text-4xl justify-self-center">No Photo!</p> <!-- grid2 -->
+                <div v-for="pic in searchResultArray" class="bg-white rounded h-full text-grey-darkest no-underline shadow-md">
+                    <button @click="toggleLike(pic)" class="w-full">
+                        <h1 class="text-3xl p-6">{{pic[1]}} <span v-show="pic[2]">❤️<span></h1>
+                    </button>
+                    <img @click="toggleBigPhotoDisplay(pic[0])" class="w-full block rounded-b" :src="pic[0]">
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-black w-full h-screen" v-show="bigPhotoDisplay">
+            <div class="h-1/6 flex justify-end">
+                <button @click="toggleBigPhotoDisplay" class="material-icons h-1/2 text-5xl mr-3 mt-2 text-white">highlight_off</button>
+            </div>
+            <div class="h-5/6 flex justify-center">
+                <img class="h-full pb-2 -mt-8" :src="bigPhotoPath">
+            </div>
+        </div>
+    </body>
+
+    <!-- my main.js -->
+    <script src="./main.js"></script>
+</body>
+
+</html>
