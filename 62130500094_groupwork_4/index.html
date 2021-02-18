@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <body id="app" class="bg-indigo-lightest font-sans">
+    <div id="app" class="bg-indigo-lightest font-sans">
         <div v-show="!bigPhotoDisplay">
             <div class="flex justify-center mb-2">
                 <h1 class="text-4xl font-bold">Photo Gallery ({{countPics}})</h1>
@@ -59,7 +59,7 @@
                 <img class="h-full pb-2 -mt-8" :src="bigPhotoPath">
             </div>
         </div>
-    </body>
+    </div>
 
     <!-- my main.js -->
     <script src="./main.js"></script>
